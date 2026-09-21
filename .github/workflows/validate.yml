@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Verify required files
         run: |
@@ -24,6 +26,7 @@ jobs:
           test -s manifest.webmanifest
           test -s sw.js
           test -s icon.svg
+          test -s README.md
 
       - name: Validate manifest JSON
         run: python -m json.tool manifest.webmanifest >/dev/null
@@ -39,3 +42,24 @@ jobs:
         run: |
           grep -q 'manifest.webmanifest' liqhunter-pwa.html
           grep -q 'serviceWorker' liqhunter-pwa.html
+
+      - name: Enforce README freshness
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          grep -q 'README maintenance' README.md
+          if [ "$EVENT_NAME" = 'pull_request' ]; then
+            changed=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
+          elif git rev-parse "$GITHUB_SHA^" >/dev/null 2>&1; then
+            changed=$(git diff --name-only "$GITHUB_SHA^" "$GITHUB_SHA")
+          else
+            changed=$(git ls-tree -r --name-only "$GITHUB_SHA")
+          fi
+          core_changed=$(printf '%s\n' "$changed" | grep -E '^(liqhunter-pwa.html|liqhunter-plan.html|boolean-first-audit.md|manifest.webmanifest|sw.js|icon.svg|\.github/workflows/)' || true)
+          if [ -n "$core_changed" ] && ! printf '%s\n' "$changed" | grep -qx 'README.md'; then
+            echo 'README.md must be updated when core project files change.'
+            printf '%s\n' "$core_changed"
+            exit 1
+          fi

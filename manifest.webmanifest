@@ -1,0 +1,13 @@
+{
+  "name": "LiqHunter Yön Analizi",
+  "short_name": "LiqHunter",
+  "lang": "tr",
+  "start_url": "./liqhunter-pwa.html",
+  "display": "standalone",
+  "background_color": "#081018",
+  "theme_color": "#081018",
+  "description": "Piyasa yönü analiz ve tahmin paneli",
+  "icons": [
+    {"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

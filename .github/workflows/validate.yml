@@ -1,0 +1,41 @@
+name: Validate LiqHunter
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  static-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify required files
+        run: |
+          test -s liqhunter-pwa.html
+          test -s liqhunter-plan.html
+          test -s boolean-first-audit.md
+          test -s manifest.webmanifest
+          test -s sw.js
+          test -s icon.svg
+
+      - name: Validate manifest JSON
+        run: python -m json.tool manifest.webmanifest >/dev/null
+
+      - name: Enforce analysis-only boundary
+        run: |
+          if grep -Eiq 'execute_signal|create_order|place_order|/api/switch|set_leverage|take_profit|stop_loss' liqhunter-pwa.html; then
+            echo 'Forbidden trading execution pattern found in the PWA.'
+            exit 1
+          fi
+
+      - name: Check HTML entry points
+        run: |
+          grep -q 'manifest.webmanifest' liqhunter-pwa.html
+          grep -q 'serviceWorker' liqhunter-pwa.html

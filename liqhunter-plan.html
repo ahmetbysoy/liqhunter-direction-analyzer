@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#091018">
+  <title>LiqHunter | Ürün Planı</title>
+  <style>
+    :root{--bg:#091018;--panel:#101a25;--panel2:#142333;--line:#26384a;--text:#edf4f7;--muted:#91a5b4;--mint:#57e3b0;--amber:#f8c36b;--red:#ff7782;--blue:#83b7ff;--r:18px}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 0,#173146 0,#091018 42%);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;min-height:100vh}
+    button{font:inherit;color:inherit} .shell{max-width:720px;margin:auto;min-height:100vh;padding-bottom:92px}
+    header{padding:22px 20px 12px;position:sticky;top:0;z-index:4;background:linear-gradient(#091018f2,#091018d9 78%,transparent);backdrop-filter:blur(12px)}
+    .eyebrow{color:var(--mint);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:5px}.top h1{font-size:24px;line-height:1.05;margin:0;letter-spacing:-.04em}.status{display:flex;align-items:center;gap:7px;color:var(--mint);font-size:12px;white-space:nowrap}.dot{width:8px;height:8px;background:var(--mint);border-radius:50%;box-shadow:0 0 14px var(--mint)}
+    .sub{color:var(--muted);margin:10px 0 0;font-size:13px;max-width:560px}.tabs{display:flex;gap:8px;overflow:auto;padding:12px 20px 4px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab{border:1px solid var(--line);background:#0d1721;border-radius:999px;padding:8px 13px;color:var(--muted);font-size:12px;white-space:nowrap;cursor:pointer}.tab.active{color:#06120e;background:var(--mint);border-color:var(--mint);font-weight:800}
+    main{padding:8px 20px}.view{display:none}.view.active{display:block}.hero{background:linear-gradient(135deg,#142d3d,#0f1d2a);border:1px solid #2e5361;border-radius:var(--r);padding:18px;margin:4px 0 14px}.hero h2{font-size:20px;margin:0 0 7px;letter-spacing:-.03em}.hero p{margin:0;color:#b8cbd3}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}.card{background:#101a25cc;border:1px solid var(--line);border-radius:var(--r);padding:14px}.metric strong{display:block;font-size:24px;letter-spacing:-.04em}.metric span,.label{color:var(--muted);font-size:12px}.accent{color:var(--mint)}.amber{color:var(--amber)}.red{color:var(--red)}.blue{color:var(--blue)}
+    .section-title{display:flex;align-items:center;justify-content:space-between;margin:20px 0 9px}.section-title h3{font-size:14px;margin:0}.section-title span{font-size:11px;color:var(--muted)}.row{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid #20303e}.row:last-child{border-bottom:0;padding-bottom:0}.badge{min-width:58px;text-align:center;border-radius:8px;padding:4px 6px;font-size:10px;font-weight:800;background:#193428;color:var(--mint)}.badge.amber{background:#382d1b}.badge.blue{background:#1d2e48}.row b{font-size:13px}.row p{margin:2px 0 0;color:var(--muted);font-size:12px}.progress{height:7px;background:#1b2a37;border-radius:99px;overflow:hidden;margin-top:10px}.progress i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--mint),var(--blue))}.quote{border-left:3px solid var(--amber);padding:8px 0 8px 12px;color:#dce6e7;font-size:13px}.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#b9d7e6;background:#0a131c;border:1px solid #1d303f;border-radius:10px;padding:12px;font-size:11px;white-space:pre-wrap}
+    .screen{border:1px solid var(--line);border-radius:15px;padding:13px;margin:9px 0;background:linear-gradient(110deg,#101c28,#0d1721)}.screen-top{display:flex;justify-content:space-between;gap:8px}.screen h4{margin:0;font-size:14px}.screen small{color:var(--muted)}.screen ul{margin:9px 0 0;padding-left:17px;color:#bfd0d8;font-size:12px}.flow{display:grid;grid-template-columns:1fr 1fr;gap:9px}.flow .card{padding:12px}.decision{margin-top:9px;border:1px dashed #446071;border-radius:12px;padding:10px;color:#c9d8dd;font-size:12px}.decision b{color:var(--amber)}
+    .bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(720px,100%);display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:9px 14px calc(9px + env(safe-area-inset-bottom));background:#0b141eea;border-top:1px solid var(--line);backdrop-filter:blur(18px);z-index:5}.bottom button{border:0;background:transparent;color:var(--muted);font-size:10px;padding:5px 2px;cursor:pointer}.bottom button.active{color:var(--mint)}.bottom strong{display:block;font-size:17px;line-height:1;margin-bottom:4px;font-weight:500}.note{padding:12px;border-radius:12px;background:#172536;color:#c5d4dc;font-size:12px}.check{display:flex;gap:9px;align-items:flex-start;margin:9px 0;color:#c5d4dc;font-size:13px}.check input{accent-color:var(--mint);margin-top:4px}
+    @media(min-width:650px){main{padding-left:28px;padding-right:28px}.tabs{padding-left:28px;padding-right:28px}header{padding-left:28px;padding-right:28px}.grid{grid-template-columns:repeat(4,1fr)}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="eyebrow">Ürün çalışma panosu · v0.1</div>
+      <div class="top"><h1>LiqHunter</h1><div class="status"><i class="dot"></i>Planlama aktif</div></div>
+      <p class="sub">Piyasa hareketlerini yön adaylarına dönüştüren, kanıt gösteren ve belirsizliği açıklayan native PWA.</p>
+    </header>
+    <nav class="tabs" aria-label="Plan sekmeleri">
+      <button class="tab active" data-view="overview">Özet</button><button class="tab" data-view="product">Ürün</button><button class="tab" data-view="bot">Bot</button><button class="tab" data-view="build">Yol haritası</button>
+    </nav>
+    <main>
+      <section id="overview" class="view active">
+        <div class="hero"><h2>Karar desteği, kör sinyal değil</h2><p>İlk sürümün ana vaadi: “Şu an ne oluyor, neden önemli ve risk ne?” sorularını 10 saniyede yanıtlamak.</p></div>
+        <div class="grid"><div class="card metric"><span>Veri katmanı</span><strong class="accent">3</strong><span>fiyat · akış · likidasyon</span></div><div class="card metric"><span>Analiz modülü</span><strong class="blue">6</strong><span>strateji ailesi</span></div><div class="card metric"><span>Çıktı</span><strong class="amber">1</strong><span>yön kartı</span></div><div class="card metric"><span>Ürün sınırı</span><strong class="red">0</strong><span>işlem katmanı</span></div></div>
+        <div class="section-title"><h3>Kaynak dosyadan alınan güçlü fikirler</h3><span>korunacak</span></div>
+        <div class="card"><div class="row"><span class="badge">AKIŞ</span><div><b>Gerçek zamanlı veri</b><p>Kline, aggTrade ve forceOrder akışlarının ayrı kanallarda işlenmesi doğru yön.</p></div></div><div class="row"><span class="badge">TAHMİN</span><div><b>Çoklu kanıt</b><p>EMA, RSI, ATR, delta, alıcı/satıcı baskısı ve likidasyon piyasa yönünü birlikte açıklar.</p></div></div><div class="row"><span class="badge amber">ÖLÇÜM</span><div><b>Tahmin doğruluğu</b><p>Her zaman ufku için yön tahmini, isabet oranı ve belirsizlik ayrıca ölçülmeli.</p></div></div></div>
+        <div class="section-title"><h3>En önemli ürün kararı</h3><span>öncelik</span></div>
+        <div class="quote">Ürün dili <b>yön tahmini + kanıt + belirsizlik + geçersizleşme</b> şeklinde olmalı. Uygulama işlem önermez ve işlem gerçekleştirmez.</div>
+      </section>
+      <section id="product" class="view">
+        <div class="section-title"><h3>Native PWA bilgi mimarisi</h3><span>mobil first</span></div>
+        <div class="screen"><div class="screen-top"><h4>01 · Keşfet</h4><small>varsayılan açılış</small></div><ul><li>“Bugün dikkat çekenler” yön adayı listesi</li><li>Coin, yön, güven skoru, zaman ufku ve belirsizlik etiketi</li><li>Filtre: kısa vade / orta vade / yüksek hacim</li></ul></div>
+        <div class="screen"><div class="screen-top"><h4>02 · Piyasa</h4><small>derin analiz</small></div><ul><li>Fiyat, trend, RSI/ATR ve alıcı-satıcı dengesi</li><li>Likidasyon ısı haritası ve whale hareketleri</li><li>Üstte sabit coin + timeframe seçim çubuğu</li></ul></div>
+        <div class="screen"><div class="screen-top"><h4>03 · Yön tahminleri</h4><small>izleme listesi</small></div><ul><li>Yukarı / aşağı / nötr yön kartları</li><li>Olasılık bandı, zaman ufku ve güven seviyesi</li><li>Geçmiş tahminlerin isabet ve belirsizlik geçmişi</li></ul></div>
+        <div class="screen"><div class="screen-top"><h4>04 · Bot</h4><small>sohbetli analiz</small></div><ul><li>“BTC neden hareketlendi?” gibi doğal dil soruları</li><li>Bot cevabında veri kaynakları ve hesaplanan kanıtlar</li><li>Yalnızca analiz, açıklama ve alarm üretimi</li></ul></div>
+        <div class="screen"><div class="screen-top"><h4>05 · Ayarlar</h4><small>kontrol</small></div><ul><li>Risk profili, bildirimler, favoriler, veri sağlayıcıları</li><li>Demo/backtest modu ile gerçek veri modunun ayrımı</li></ul></div>
+      </section>
+      <section id="bot" class="view">
+        <div class="hero"><h2>Analiz botunun çekirdeği</h2><p>Bot tek başına iddia üretmez. Önce olayları toplar, sonra puanlar, en son açıklanabilir bir yön analiz kartına dönüştürür.</p></div>
+        <div class="flow"><div class="card"><span class="label">GİRDİ</span><p>Fiyat ve mumlar<br>İşlem akışı<br>Likidasyonlar<br>Order book<br>Haber/sentiment (opsiyonel)</p></div><div class="card"><span class="label">ÇIKTI</span><p>Yön: yukarı/aşağı/nötr<br>Güven: 0-100<br>Zaman ufku<br>Belirsizlik seviyesi<br>Geçersizleşme nedeni</p></div></div>
+        <div class="section-title"><h3>Karar akışı</h3><span>önerilen</span></div>
+        <div class="card"><div class="row"><span class="badge">1</span><div><b>Veri kalite kapısı</b><p>Akış kopuksa tahmin üretme; “veri yetersiz” göster.</p></div></div><div class="row"><span class="badge">2</span><div><b>Rejim tanıma</b><p>Trend, yatay, yüksek volatilite ve likidite stresi ayrı sınıflansın.</p></div></div><div class="row"><span class="badge">3</span><div><b>Kanıt puanlama</b><p>Her strateji katkısını ayrı göster; tek bir opak toplam skor kullanma.</p></div></div><div class="row"><span class="badge amber">4</span><div><b>Belirsizlik filtresi</b><p>Çelişkili veride yönü nötrleştir ve kullanıcıyı uyar.</p></div></div><div class="row"><span class="badge blue">5</span><div><b>İzleme ve alarm</b><p>Yön değişimi, güven düşüşü veya tahmin geçersizleşmesinde bildirim üret.</p></div></div></div>
+        <div class="decision"><b>Örnek çıktı:</b> “SOL/USDT · 15 dk · Yukarı yön adayı · 72/100. Alıcı delta artıyor ve satıcı tarafı likidasyonları kümeleniyor. Belirsizlik: ATR yükseliyor. Geçersizleşme: destek altı kapanış.”</div>
+      </section>
+      <section id="build" class="view">
+        <div class="section-title"><h3>Uygulama sırası</h3><span>küçük ve test edilebilir</span></div>
+        <div class="card"><div class="row"><span class="badge">FAZ 1</span><div><b>Mobil shell + mock veri</b><p>HTML/CSS/JS, PWA manifest, service worker, alt navigasyon, sekmeler, erişilebilir kartlar.</p><div class="progress"><i style="width:25%"></i></div></div></div><div class="row"><span class="badge">FAZ 2</span><div><b>Gerçek veri adaptörü</b><p>Provider bağımsız REST/WebSocket katmanı, reconnect, veri tazeliği ve hata durumu.</p><div class="progress"><i style="width:10%"></i></div></div></div><div class="row"><span class="badge amber">FAZ 3</span><div><b>Yön analiz motoru + backtest</b><p>İlk 2-3 strateji, tahmin olay günlüğü, zaman ufku bazlı doğruluk ve sonuç ekranı.</p><div class="progress"><i style="width:5%"></i></div></div></div><div class="row"><span class="badge blue">FAZ 4</span><div><b>Bot anlatımı + bildirim</b><p>Kanıt özetleri, yön değişimi bildirimleri, kullanıcı tercihleri ve güven kalibrasyonu.</p><div class="progress"><i style="width:0%"></i></div></div></div></div>
+        <div class="section-title"><h3>İlk sürüm kapsamı</h3><span>ship / no-ship</span></div>
+        <div class="card"><label class="check"><input type="checkbox" checked> BTC, ETH ve SOL için mock yön tahmini kartı</label><label class="check"><input type="checkbox" checked> Keşfet, Piyasa, Tahminler, Bot alt navigasyonu</label><label class="check"><input type="checkbox"> Gerçek zamanlı WebSocket ve reconnect</label><label class="check"><input type="checkbox"> Tahmin doğruluğu ve strateji karşılaştırması</label><label class="check"><input type="checkbox" checked> Borsa işlem entegrasyonu yok</label></div>
+        <div class="section-title"><h3>Teknik yön</h3><span>HTML + JavaScript</span></div>
+        <div class="code">index.html       PWA shell ve ekranlar
+app.js            state, router, bot kartları
+styles.css        mobile-first tasarım sistemi
+data-adapter.js   mock / REST / WebSocket
+analysis-engine.js yön, güven ve kanıt hesapları
+manifest.json     installable PWA
+sw.js             offline shell ve cache</div>
+        <p class="note">Gerçek finansal sonuç vaadi yoktur. Uygulama “yatırım tavsiyesi” değil, araştırma ve karar destek aracı olarak konumlanmalı.</p>
+      </section>
+    </main>
+    <nav class="bottom" aria-label="Mobil navigasyon"><button class="active" data-view="overview"><strong>⌂</strong>Özet</button><button data-view="product"><strong>◫</strong>Ürün</button><button data-view="bot"><strong>◎</strong>Bot</button><button data-view="build"><strong>≡</strong>Plan</button></nav>
+  </div>
+  <script>
+    const buttons=[...document.querySelectorAll('[data-view]')];
+    function openView(name){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===name));buttons.forEach(b=>b.classList.toggle('active',b.dataset.view===name));document.querySelector('.tabs .active')?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});window.scrollTo({top:0,behavior:'smooth'})}
+    buttons.forEach(b=>b.addEventListener('click',()=>openView(b.dataset.view)));
+  </script>
+</body>
+</html>
